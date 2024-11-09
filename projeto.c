@@ -502,9 +502,11 @@ void menu(int user){
 }
 
 int main(){
-    srand((unsigned int)time(NULL));
-    int user = login();
-    menu(user);
+    // srand((unsigned int)time(NULL));
+    // int user = login();
+    // menu(user);
+
+    
     
     return 0;
 }
