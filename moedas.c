@@ -38,7 +38,7 @@ void criarMoeda(){
     printf("Moeda criada com sucesso!!!!\n");
 }
 
-void exibirMoedas() {
+void exibirMoedas(){
     Moeda md;
     FILE *arq = fopen("moedas.bin", "rb");
 
