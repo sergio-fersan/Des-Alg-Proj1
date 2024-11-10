@@ -1,8 +1,0 @@
-rSaldo 0.000000
-rCota 0.000000
-bcSaldo 0.000000
-bcCota 372983.718750
-ethSaldo 0.000000
-ethCota 15155.068359
-rpSaldo 0.000000
-rpCota 3.666251
