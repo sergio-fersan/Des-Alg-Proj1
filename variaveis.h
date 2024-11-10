@@ -2,6 +2,7 @@
 #ifndef VARIAVEIS_H
 
 float lerVar(const char *, const char *);
+int leVarInt(const char *, const char *);
 void escVar(const char *, const char *, float);
 
 #endif

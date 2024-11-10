@@ -21,6 +21,21 @@ float lerVar(const char *arquivo, const char *variavel){
     return 0; // 0 se nn achou
 }
 
+float lerVarInt(const char *arquivo, const char *variavel){
+    FILE *arq = fopen(arquivo, "rb");
+
+    Variavel var;
+    while(fread(&var, sizeof(Variavel), 1, arq)){
+        if(strcmp(var.nome, variavel) == 0){
+            fclose(arq);
+            return (int)var.valor;
+        }
+    }
+
+    fclose(arq);
+    return 0; // 0 se nn achou
+}
+
 void escVar(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "rb+"); // leitura e escrita ao mesmo tempo
 
