@@ -439,7 +439,10 @@ int main(){
     // int user = login();
     // menu(user);
 
-    
+    // bcCota 372983.718750
+    // ethCota 15155.068359
+    // rpCota 3.666251
+
     
     return 0;
 }
