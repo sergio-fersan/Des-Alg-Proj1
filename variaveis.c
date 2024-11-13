@@ -3,14 +3,46 @@
 
 typedef struct {
     char nome[15];
-    float valor;
-} Variavel;
+    char valor[50];
+} VariavelString;
 
-float lerVar(const char *arquivo, const char *variavel){
+typedef struct {
+    char nome[15];
+    float valor;
+} VariavelFloat;
+
+void escVarFloat(const char *arquivo, const char *variavel, float valor){
+    FILE *arq = fopen(arquivo, "rb+");
+    if(!arq){
+        arq = fopen(arquivo, "wb"); // cria o arquivo se nn existe
+    }
+
+    VariavelFloat var;
+    int achou = 0;
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        if(strcmp(var.nome, variavel) == 0){
+            achou = 1;
+            var.valor = valor;
+            fseek(arq, -sizeof(VariavelFloat), SEEK_CUR);
+            fwrite(&var, sizeof(VariavelFloat), 1, arq);
+            break;
+        }
+    }
+
+    if(achou != 1){
+        strcpy(var.nome, variavel);
+        var.valor = valor;
+        fwrite(&var, sizeof(VariavelFloat), 1, arq);
+    }
+
+    fclose(arq);
+}
+
+float lerVarFloat(const char *arquivo, const char *variavel){
     FILE *arq = fopen(arquivo, "rb");
 
-    Variavel var;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
+    VariavelFloat var;
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
         if(strcmp(var.nome, variavel) == 0){
             fclose(arq);
             return var.valor;
@@ -18,146 +50,52 @@ float lerVar(const char *arquivo, const char *variavel){
     }
 
     fclose(arq);
-    return 0; // 0 se nn achou
+    return 0;
 }
 
-float lerVarInt(const char *arquivo, const char *variavel){
-    FILE *arq = fopen(arquivo, "rb");
-
-    Variavel var;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
-        if(strcmp(var.nome, variavel) == 0){
-            fclose(arq);
-            return (int)var.valor;
-        }
+void escVarStr(const char* arquivo, const char* variavel, const char* valor){
+    FILE* arq = fopen(arquivo, "rb+");
+    if (!arq) {
+        arq = fopen(arquivo, "wb");
     }
 
-    fclose(arq);
-    return 0; // 0 se nn achou
-}
-
-void escVar(const char *arquivo, const char *variavel, float valor){
-    FILE *arq = fopen(arquivo, "rb+"); // leitura e escrita ao mesmo tempo
-
-    Variavel var;
+    VariavelString var;
     int achou = 0;
-    long posicao = 0;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
-        if(strcmp(var.nome, variavel) == 0){
+
+    while (fread(&var, sizeof(VariavelString), 1, arq) == 1) {
+        if (strcmp(var.nome, variavel) == 0) {
+            fseek(arq, -sizeof(VariavelString), SEEK_CUR);
+            strncpy(var.valor, valor, 49);
+            var.valor[49] = '\0';
+            fwrite(&var, sizeof(VariavelString), 1, arq);
             achou = 1;
-            posicao = ftell(arq) - sizeof(Variavel);
             break;
         }
     }
-
-    if(achou == 1){
-        fseek(arq, posicao, SEEK_SET); // encontra a posicao da variavel
-        snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-        var.valor = valor;
-        fwrite(&var, sizeof(Variavel), 1, arq); // so escreve nessa linha
-    } else{ // se nn achou cria a variavle
-        snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-        var.valor = valor;
-        fwrite(&var, sizeof(Variavel), 1, arq);
+    
+    if (achou == 0) {
+        fseek(arq, 0, SEEK_END);
+        strncpy(var.nome, variavel, 49);
+        var.nome[49] = '\0';
+        strncpy(var.valor, valor, 49);
+        var.valor[49] = '\0';
+        fwrite(&var, sizeof(VariavelString), 1, arq);
     }
+
     fclose(arq);
 }
 
-// typedef struct {
-//     char nome[15];
-//     float valor; // Alterado para armazenar strings
-// } Variavel;
+char* lerVarStr(const char* arquivo, const char* variavel) {
+    FILE* arq = fopen(arquivo, "rb");
 
-// float lerVar(const char *arquivo, const char *variavel){
-//     FILE *arq = fopen(arquivo, "rb");
+    VariavelString var;
+    while (fread(&var, sizeof(VariavelString), 1, arq) == 1) {
+        if (strcmp(var.nome, variavel) == 0) {
+            fclose(arq);
+            return strdup(var.valor);
+        }
+    }
 
-//     Variavel var;
-//     while(fread(&var, sizeof(Variavel), 1, arq)){
-//         if(strcmp(var.nome, variavel) == 0){
-//             fclose(arq);
-//             return var.valor;
-//         }
-//     }
-
-//     fclose(arq);
-//     return 0; // 0 se nn achou
-// }
-
-// float lerVarInt(const char *arquivo, const char *variavel){
-//     FILE *arq = fopen(arquivo, "rb");
-
-//     Variavel var;
-//     while(fread(&var, sizeof(Variavel), 1, arq)){
-//         if(strcmp(var.nome, variavel) == 0){
-//             fclose(arq);
-//             return (int)var.valor;
-//         }
-//     }
-
-//     fclose(arq);
-//     return 0; // 0 se nn achou
-// }
-
-// void escVar(const char *arquivo, const char *variavel, float valor){
-//     FILE *arq = fopen(arquivo, "rb+"); // leitura e escrita ao mesmo tempo
-
-//     Variavel var;
-//     int achou = 0;
-//     long posicao = 0;
-//     while(fread(&var, sizeof(Variavel), 1, arq)){
-//         if(strcmp(var.nome, variavel) == 0){
-//             achou = 1;
-//             posicao = ftell(arq) - sizeof(Variavel);
-//             break;
-//         }
-//     }
-
-//     if(achou == 1){
-//         fseek(arq, posicao, SEEK_SET); // encontra a posicao da variavel
-//         snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-//         var.valor = valor;
-//         fwrite(&var, sizeof(Variavel), 1, arq); // so escreve nessa linha
-//     } else{ // se nn achou cria a variavle
-//         snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-//         var.valor = valor;
-//         fwrite(&var, sizeof(Variavel), 1, arq);
-//     }
-//     fclose(arq);
-// }
-
-// void escVar(const char *arquivo, const char *variavel, const char *valor){
-//     FILE *arq = fopen(arquivo, "rb+"); // leitura e escrita ao mesmo tempo
-
-//     if (arq == NULL) {
-//         // Caso o arquivo não exista, criamos o arquivo em modo de escrita binária
-//         arq = fopen(arquivo, "wb+");
-//         if (arq == NULL) {
-//             perror("Erro ao abrir o arquivo");
-//             return;
-//         }
-//     }
-
-//     Variavel var;
-//     int achou = 0;
-//     long posicao = 0;
-//     while(fread(&var, sizeof(Variavel), 1, arq)){
-//         if(strcmp(var.nome, variavel) == 0){
-//             achou = 1;
-//             posicao = ftell(arq) - sizeof(Variavel);
-//             break;
-//         }
-//     }
-
-//     if(achou == 1){
-//         fseek(arq, posicao, SEEK_SET); // encontra a posição da variável
-//         snprintf(var.nome, sizeof(var.nome), "%s", variavel); // Atualiza o nome da variável
-//         snprintf(var.valor, sizeof(var.valor), "%s", valor); // Atualiza o valor com a nova string
-//         fwrite(&var, sizeof(Variavel), 1, arq); // Sobrescreve a variável
-//     } else { // Se não encontrou a variável, cria uma nova
-//         snprintf(var.nome, sizeof(var.nome), "%s", variavel); // Define o nome
-//         snprintf(var.valor, sizeof(var.valor), "%s", valor); // Define o valor como string
-//         fwrite(&var, sizeof(Variavel), 1, arq); // Adiciona a nova variável
-//     }
-
-//     fclose(arq);
-// }
+    fclose(arq);
+    return NULL;
+}

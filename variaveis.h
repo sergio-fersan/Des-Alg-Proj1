@@ -1,8 +1,10 @@
 #define VARIAVEIS_H
 #ifndef VARIAVEIS_H
 
-float lerVar(const char *, const char *);
-int leVarInt(const char *, const char *);
-void escVar(const char *, const char *, float);
+void escVarFloat(const char *, const char *, float );
+float LerVarFloat(const char *, const char *);
+void escVarStr(const char *, const char *, const char * );
+char * LerVarStr(const char *, const char *);
+
 
 #endif
