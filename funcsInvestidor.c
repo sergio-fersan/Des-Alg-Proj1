@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "funcsInvestidor.h"
+#include "moedas.h"
 
 int login(){
     int user;
