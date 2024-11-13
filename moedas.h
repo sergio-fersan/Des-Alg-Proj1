@@ -4,5 +4,6 @@
 void clearBuffer();
 void criarMoeda();
 void exibirMoedas();
+float lerValor(const char *, const char *);
 
 #endif

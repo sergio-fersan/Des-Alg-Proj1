@@ -1,0 +1,6 @@
+#ifndef FUNCSINVESTIDOR_H
+#define FUNCSINVESTIDOR_H
+
+
+
+#endif

@@ -54,3 +54,28 @@ void exibirMoedas(){
     }
     fclose(arq);
 }
+
+float lerValor(const char *nome, const char *valor){
+    FILE *arq = fopen("moedas.bin", "rb");
+
+    Moeda md;
+    while(fread(&md, sizeof(Moeda), 1, arq)){
+        if(strcmp(md.nome, nome) == 0){
+            if(strcmp(valor, "cota") == 0){
+                fclose(arq);
+                return md.cota;
+            }
+            else if(strcmp(valor, "txCompra") == 0){
+                fclose(arq);
+                return md.txCompra;
+            }
+            else if(strcmp(valor, "txVenda") == 0){
+                fclose(arq);
+                return md.txVenda;
+            }
+        }
+    }
+
+    fclose(arq);
+    return 0;
+}
