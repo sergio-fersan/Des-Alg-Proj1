@@ -558,15 +558,6 @@ int main(){
         snprintf(tmp2, sizeof(tmp2), "%d2345", i);
         escVarFloat(tmp, "senha", atof(tmp2));
     }
-
-    
-
-    
-
-    
-
-    
-    
     
     return 0;
 }
