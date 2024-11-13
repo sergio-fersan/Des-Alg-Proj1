@@ -546,9 +546,18 @@ int main(){
 
 
     char tmp[100];
+    char tmp2[10];
     char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
     
-    
+    _mkdir("usuarios");
+    for(int i = 1; i <= 10; i++){
+        snprintf(tmp, sizeof(tmp), "usuarios/%s", nomes[i - 1]);
+        _mkdir(tmp);
+        snprintf(tmp, sizeof(tmp), "usuarios/%s/%s", nomes[i - 1], "dados.bin");
+        escVarFloat(tmp, "cpf", i);
+        snprintf(tmp2, sizeof(tmp2), "%d2345", i);
+        escVarFloat(tmp, "senha", atof(tmp2));
+    }
 
     
 
