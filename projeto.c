@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <direct.h>
 
 // int lerVarInt(const char *, const char *);
 // float lerVar(const char *, const char *);
@@ -433,17 +434,48 @@
 //             exit(0);
 //     }
 // }
+typedef struct {
+    char nome[15];
+    char valor[50];
+} VariavelString;
 
 typedef struct {
     char nome[15];
-    int valor;
-} Variavel;
+    float valor;
+} VariavelFloat;
 
-float lerVar(const char *arquivo, const char *variavel){
+void escVarFloat(const char *arquivo, const char *variavel, float valor){
+    FILE *arq = fopen(arquivo, "rb+");
+    if(!arq){
+        arq = fopen(arquivo, "wb"); // cria o arquivo se nn existe
+    }
+
+    VariavelFloat var;
+    int achou = 0;
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        if(strcmp(var.nome, variavel) == 0){
+            achou = 1;
+            var.valor = valor;
+            fseek(arq, -sizeof(VariavelFloat), SEEK_CUR);
+            fwrite(&var, sizeof(VariavelFloat), 1, arq);
+            break;
+        }
+    }
+
+    if(achou != 1){
+        strcpy(var.nome, variavel);
+        var.valor = valor;
+        fwrite(&var, sizeof(VariavelFloat), 1, arq);
+    }
+
+    fclose(arq);
+}
+
+float lerVarFloat(const char *arquivo, const char *variavel){
     FILE *arq = fopen(arquivo, "rb");
 
-    Variavel var;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
+    VariavelFloat var;
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
         if(strcmp(var.nome, variavel) == 0){
             fclose(arq);
             return var.valor;
@@ -451,49 +483,54 @@ float lerVar(const char *arquivo, const char *variavel){
     }
 
     fclose(arq);
-    return 0; // 0 se nn achou
+    return 0;
 }
 
-int lerVarInt(const char *arquivo, const char *variavel){
-    FILE *arq = fopen(arquivo, "rb");
-
-    Variavel var;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
-        if(strcmp(var.nome, variavel) == 0){
-            fclose(arq);
-            return (int)var.valor;
-        }
+void escVarStr(const char* arquivo, const char* variavel, const char* valor){
+    FILE* arq = fopen(arquivo, "rb+");
+    if (!arq) {
+        arq = fopen(arquivo, "wb");
     }
 
-    fclose(arq);
-    return 0; // 0 se nn achou
-}
-
-void escVar(const char *arquivo, const char *variavel, float valor){
-    FILE *arq = fopen(arquivo, "rb+"); // leitura e escrita ao mesmo tempo
-
-    Variavel var;
+    VariavelString var;
     int achou = 0;
-    long posicao = 0;
-    while(fread(&var, sizeof(Variavel), 1, arq)){
-        if(strcmp(var.nome, variavel) == 0){
+
+    while (fread(&var, sizeof(VariavelString), 1, arq) == 1) {
+        if (strcmp(var.nome, variavel) == 0) {
+            fseek(arq, -sizeof(VariavelString), SEEK_CUR);
+            strncpy(var.valor, valor, 49);
+            var.valor[49] = '\0';
+            fwrite(&var, sizeof(VariavelString), 1, arq);
             achou = 1;
-            posicao = ftell(arq) - sizeof(Variavel);
             break;
         }
     }
-
-    if(achou == 1){
-        fseek(arq, posicao, SEEK_SET); // encontra a posicao da variavel
-        snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-        var.valor = valor;
-        fwrite(&var, sizeof(Variavel), 1, arq); // so escreve nessa linha
-    } else{ // se nn achou cria a variavle
-        snprintf(var.nome, sizeof(var.nome), "%s", variavel);
-        var.valor = valor;
-        fwrite(&var, sizeof(Variavel), 1, arq);
+    
+    if (achou == 0) {
+        fseek(arq, 0, SEEK_END);
+        strncpy(var.nome, variavel, 49);
+        var.nome[49] = '\0';
+        strncpy(var.valor, valor, 49);
+        var.valor[49] = '\0';
+        fwrite(&var, sizeof(VariavelString), 1, arq);
     }
+
     fclose(arq);
+}
+
+char* lerVarStr(const char* arquivo, const char* variavel) {
+    FILE* arq = fopen(arquivo, "rb");
+
+    VariavelString var;
+    while (fread(&var, sizeof(VariavelString), 1, arq) == 1) {
+        if (strcmp(var.nome, variavel) == 0) {
+            fclose(arq);
+            return strdup(var.valor);
+        }
+    }
+
+    fclose(arq);
+    return NULL;
 }
 
 int main(){
@@ -507,22 +544,20 @@ int main(){
 
     // snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
 
-    char tmp[100];
-    char tmp2[10];
-    int senha;
-    
-    for(int i = 1; i <= 10; i++){
-        snprintf(tmp, sizeof(tmp), "usuarios/user%d/dados.bin", i);
-        snprintf(tmp2, sizeof(tmp2), "%d2345", i);
-        senha = atoi(tmp2);
-        
-        escVar(tmp, "senha", senha);
-    }
 
-    for(int j = 1; j <= 10; j++){
-        snprintf(tmp, sizeof(tmp), "usuarios/user%d/dados.bin", j);
-        printf("Usuario %d: %d\n", j, lerVarInt(tmp, "senha"));
-    }
+    char tmp[100];
+    char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
     
     return 0;
 }
