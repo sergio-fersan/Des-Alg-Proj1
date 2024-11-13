@@ -1,5 +1,5 @@
-#define VARIAVEIS_H
 #ifndef VARIAVEIS_H
+#define VARIAVEIS_H
 
 void escVarFloat(const char *, const char *, float );
 float LerVarFloat(const char *, const char *);

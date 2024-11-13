@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <direct.h>
+#include "moedas.h"
 
 // int lerVarInt(const char *, const char *);
 // float lerVar(const char *, const char *);
@@ -444,6 +445,8 @@ int main(){
     // bcCota 372983.718750
     // ethCota 15155.068359
     // rpCota 3.666251
+
+    
     
     return 0;
 }
