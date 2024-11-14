@@ -99,3 +99,19 @@ char* lerVarStr(const char* arquivo, const char* variavel) {
     fclose(arq);
     return NULL;
 }
+
+char* lerNomeDoCpf(int cpf){
+    FILE *arq = fopen("usuarios.bin", "rb");
+
+    VariavelFloat var;
+
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        if(var.valor == cpf){
+            fclose(arq);
+            return strdup(var.nome);
+        }
+    }
+
+    fclose(arq);
+    return 0;
+}
