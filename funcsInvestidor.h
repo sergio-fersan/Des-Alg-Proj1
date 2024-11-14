@@ -2,6 +2,6 @@
 #define FUNCSINVESTIDOR_H
 
 int login();
-// void consSaldo(int);
+void consSaldo(int);
 
 #endif
