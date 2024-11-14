@@ -3,7 +3,7 @@
 #include <string.h>
 #include "moedas.h"
 #include "funcsInvestidor.h"
-
+#include "variaveis.h"
 
 int main(){
     // srand((unsigned int)time(NULL));
