@@ -79,3 +79,28 @@ float lerValor(const char *nome, const char *valor){
     fclose(arq);
     return 0;
 }
+
+char* lerNomeDoCodigo(const char *codigo){
+    FILE *arq = fopen("moedas.bin", "rb");
+    
+    Moeda md;
+    while(fread(&md, sizeof(Moeda), 1, arq)){
+        if(strcmp(md.codigo, codigo) == 0){
+            fclose(arq);
+            return strdup(md.nome);
+        }
+    }
+
+    fclose(arq);
+    return strdup("");
+}
+
+void removerSaldo(char *str) {
+    char *pos;
+    char subs[] = "Saldo";
+    size_t lenSubs = strlen(subs);
+
+    while((pos = strstr(str, subs)) != NULL){
+        memmove(pos, pos + lenSubs, strlen(pos + lenSubs) + 1);
+    }
+}

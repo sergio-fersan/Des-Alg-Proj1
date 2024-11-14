@@ -11,7 +11,9 @@ int main(){
     char tmp[30];
     char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
 
-    
+    for(int i = 1; i <= 10; i++){
+        
+    }
     
     return 0;
 }
