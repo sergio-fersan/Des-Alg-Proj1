@@ -16,7 +16,7 @@ int login(){ // FEITO
     int cpfDigitado;
     while(1){
         printf("Digite seu CPF: ");
-        scanf("%d", cpfDigitado);
+        scanf("%d", &cpfDigitado);
         if(strcmp(lerNomeDoCpf(cpfDigitado), "") == 0){
             printf("CPF nao cadastrado!! Tente outro\n");
         } else{
@@ -31,7 +31,7 @@ int login(){ // FEITO
     while(1){
         printf("Digite sua senha: ");
         scanf("%d", &senha);
-        if(senha != (int)LerVarFloat(tmp, "senha")){
+        if(senha != (int)lerVarFloat(tmp, "senha")){
             printf("Senha incorreta!!!! Tente novamente\n");
         } else{
             printf("Senha correta!!\n*--------------------------*\n");
@@ -45,29 +45,30 @@ int login(){ // FEITO
 void consSaldo(int user){
     char arquivo[50];
     while(1){
-        char senhaDigitada[10];
+        int senhaDigitada;
         printf("Informe sua senha: ");
-        scanf("%s", senhaDigitada);
+        scanf("%d", &senhaDigitada);
         char senhaArq[10];
         snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
         int senhaInt = (int)lerVarFloat(arquivo, "senha");
-        if(strcmp(senhaDigitada, (int)LerVarFloat(arquivo, "senha")) != 0){
+        if(senhaDigitada != senhaInt){
             printf("Senha incorreta!! Digite novamente\n");
         } else{
             break;
         }
     }
+    FILE *arq = fopen(arquivo, "rb");
     VariavelFloat var;
     char tmp[20];
     printf("Saldo da sua conta: \n");
-    while(fread(&var, sizeof(VariavelFloat), 1, arquivo) == 1){
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
         if(strstr(var.nome, "Saldo") != NULL){
             snprintf(tmp, sizeof(tmp), "%s", var.nome);
             removerSaldo(tmp);
-            printf("%s: %f\n", lerNomeDoCodigo(tmp), LerVarFloat(arquivo, var.nome));
-            fclose(arquivo);
+            printf("%s: %f\n", lerNomeDoCodigo(tmp), lerVarFloat(arquivo, var.nome));
         }
     }
+    fclose(arq);
     // printf("Reais: %.3f\n", lerVar(arquivo, "rSaldo"));
     // printf("BitCoin: %.3f\n", lerVar(arquivo, "bcSaldo"));
     // printf("Ethereum: %.3f\n", lerVar(arquivo, "ethSaldo"));

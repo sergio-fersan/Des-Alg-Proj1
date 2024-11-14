@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "variaveis.h"
 #include "moedas.h"
 
 void clearBuffer(){
