@@ -61,11 +61,12 @@ void consSaldo(int user){
     VariavelFloat var;
     char tmp[20];
     printf("Saldo da sua conta: \n");
+    printf("Reais: %s\n", lerVarFloat(arquivo, "reais"));
     while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
         if(strstr(var.nome, "Saldo") != NULL){
             snprintf(tmp, sizeof(tmp), "%s", var.nome);
             removerSaldo(tmp);
-            printf("%s: %f\n", lerNomeDoCodigo(tmp), lerVarFloat(arquivo, var.nome));
+            printf("%s: %.3f\n", lerNomeDoCodigo(tmp), lerVarFloat(arquivo, var.nome));
         }
     }
     fclose(arq);
