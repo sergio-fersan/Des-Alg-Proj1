@@ -113,5 +113,5 @@ char* lerNomeDoCpf(int cpf){
     }
 
     fclose(arq);
-    return 0;
+    return strdup(""); // quando nn tem ngm com esse cpf
 }

@@ -4,47 +4,37 @@
 #include <time.h>
 #include "funcsInvestidor.h"
 #include "moedas.h"
+#include "variaveis.h"
 
 int login(){
-    int user;
+    char usuario[15];
+    int cpfDigitado;
     while(1){
-        int cpfDigitado;
-        char nome[15];
         printf("Digite seu CPF: ");
         scanf("%d", cpfDigitado);
-
+        if(strcmp(lerNomeDoCpf(cpfDigitado), "") == 0){
+            printf("CPF nao cadastrado!! Tente outro\n");
+        } else{
+            snprintf(usuario, sizeof(usuario), "%s", lerNomeDoCpf(cpfDigitado));;
+            printf("Login para o usuario %s\n", usuario);
+            break;
+        }
     }
-    // while(1){
-    //     char cpfDigitado[11];
-    //     printf("Digite seu CPF: ");
-    //     scanf("%s", cpfDigitado);
-    //     char cpfArq[5];
-    //     char arquivo[25];
-    //     for(int i = 1; i <= 10; i++){
-    //         snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", i);
-    //         int cpfInt = lerVarInt(arquivo, "cpf");
-    //         snprintf(cpfArq, sizeof(cpfArq), "%d", cpfInt);
-    //         if(strcmp(cpfDigitado, cpfArq) == 0){
-    //             printf("Login para o usuario %d\n", i);
-    //             user = i;
-    //             break;
-    //         }
-    //     }
-    //     char senhaDigitada[10];
-    //     printf("Digite sua senha: ");
-    //     scanf("%s", senhaDigitada);
-    //     char senhaArq[10];
-    //     int senhaInt = lerVarInt(arquivo, "senha");
-    //     snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
-    //     if(strcmp(senhaDigitada, senhaArq) != 0){
-    //         printf("CPF e/ou senha errados!! Digite novamente\n");
-    //     } else{
-    //         printf("Login realizado com sucesso. Bem-vindo, usuario %d!\n", user);
-    //         break;
-    //     }
-    // }
-
-    // return user;
+    int senha;
+    char tmp[50];
+    snprintf(tmp, sizeof(tmp), "usuarios/%s/dados.bin", usuario);
+    while(1){
+        printf("Digite sua senha: ");
+        scanf("%d", &senha);
+        if(senha != (int)LerVarFloat(tmp, "senha")){
+            printf("Senha incorreta!!!! Tente novamente\n");
+        } else{
+            printf("Senha correta!!\n*--------------------------*\n");
+            printf("Bem vindo(a), %s!!!!!!", usuario);
+            break;
+        }
+    }
+    return cpfDigitado;
 }
 
 void consSaldo(int user){
