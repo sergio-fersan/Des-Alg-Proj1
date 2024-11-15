@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <direct.h>
 #include <string.h>
+#include <stdlib.h>
+#include <direct.h>
 #include "moedas.h"
 #include "funcsInvestidor.h"
 #include "variaveis.h"
@@ -11,18 +13,22 @@ int main(){
     // menu(user);
 
     char tmp[30];
+    char tmp2[15];
     char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
 
     for(int i = 1; i <= 10; i++){
         snprintf(tmp, sizeof(tmp), "usuarios/%s/dados.bin", nomes[i - 1]);
-        escVarFloat(tmp, "reais", 0);
-        escVarFloat(tmp, "bcSaldo", 0);
-        escVarFloat(tmp, "ethSaldo", 0);
-        escVarFloat(tmp, "xrpSaldo", 0);
+        // escVarFloat("usuarios.bin", nomes[i - 1], lerVarFloat(tmp, "cpf"))
+        // escVarFloat(tmp, "reais", 0);
+        // escVarFloat(tmp, "bcSaldo", 0);
+        // escVarFloat(tmp, "ethSaldo", 0);
+        // escVarFloat(tmp, "xrpSaldo", 0);
     }
 
-    // int user = login();
-    // consSaldo(user);
+    int user = login();
+    consSaldo(user);
+
+    // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));
     
     return 0;
 }

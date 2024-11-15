@@ -42,7 +42,7 @@ int login(){ // FEITO
     return cpfDigitado;
 }
 
-void consSaldo(int user){
+void consSaldo(int user){ // FEITO
     char arquivo[50];
     while(1){
         int senhaDigitada;
@@ -61,7 +61,7 @@ void consSaldo(int user){
     VariavelFloat var;
     char tmp[20];
     printf("Saldo da sua conta: \n");
-    printf("Reais: %s\n", lerVarFloat(arquivo, "reais"));
+    printf("Reais: %.3f\n", lerVarFloat(arquivo, "reais"));
     while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
         if(strstr(var.nome, "Saldo") != NULL){
             snprintf(tmp, sizeof(tmp), "%s", var.nome);
@@ -70,11 +70,6 @@ void consSaldo(int user){
         }
     }
     fclose(arq);
-    // printf("Reais: %.3f\n", lerVar(arquivo, "rSaldo"));
-    // printf("BitCoin: %.3f\n", lerVar(arquivo, "bcSaldo"));
-    // printf("Ethereum: %.3f\n", lerVar(arquivo, "ethSaldo"));
-    // printf("Ripple: %.3f\n", lerVar(arquivo, "rpSaldo"));
-    // menu(user);
 }
 
 // void consExt(int user){

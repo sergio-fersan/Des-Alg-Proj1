@@ -12,6 +12,11 @@ typedef struct {
     float valor;
 } VariavelFloat;
 
+typedef struct {
+    char nome[15];
+    int valor;
+} VariavelInt;
+
 void escVarFloat(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "rb+");
     if(!arq){
