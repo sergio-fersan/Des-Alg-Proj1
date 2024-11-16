@@ -12,20 +12,20 @@ int main(){
     // int user = login();
     // menu(user);
 
-    char tmp[100];
-    char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
+    // char tmp[100];
+    // char nomes[10][15] = {"Lineu", "Nene", "Bebel", "Agostinho", "Tuco", "Beicola", "Floriano", "Marilda", "Mendonca", "Genilson"};
 
-    for(int i = 1; i <= 10; i++){
-        snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.txt", nomes[i - 1]);
-    }
+    // for(int i = 1; i <= 10; i++){
+    //     snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.bin", nomes[i - 1]);
+    //     FILE *arq = fopen(tmp, "wb");
+    //     fclose(arq);
+    // }
 
     // int user = login();
-    // escVarFloat("usuarios/Agostinho/dados.bin", "reais", 0);
-    // depReais(4);
-    // depReais(4);
-    // depReais(4);
-    
-    // consExt(4);
+    escVarFloat("usuarios/Agostinho/dados.bin", "reais", 0);
+    depReais(4);
+    consSaldo(4);
+    sacarReais(4);
 
     // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));
     
