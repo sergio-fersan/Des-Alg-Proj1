@@ -75,25 +75,24 @@ void consSaldo(int user){ // FEITO
 
 void consExt(int user){
     char arquivo[50];
-    while(1){
-        int senhaDigitada;
-        printf("Informe sua senha: ");
-        scanf("%d", senhaDigitada);
-        char senhaArq[10];
-        snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
-        int senhaInt = (int)lerVarFloat(arquivo, "senha");
-        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
-        if(senhaDigitada != senhaInt){
-            printf("Senha incorreta!! Digite novamente\n");
-        } else{
-            break;
-        }
-    }
-    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+    // while(1){
+    //     int senhaDigitada;
+    //     printf("Informe sua senha: ");
+    //     scanf("%d", &senhaDigitada);
+    //     char senhaArq[10];
+    //     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+    //     int senhaInt = (int)lerVarFloat(arquivo, "senha");
+    //     if(senhaDigitada != senhaInt){
+    //         printf("Senha incorreta!! Digite novamente\n");
+    //     } else{
+    //         break;
+    //     }
+    // }
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/ext.txt", lerNomeDoCpf(user));
     char linha[100];
-    FILE *arq = fopen(arquivo, "rb");
+    FILE *arq = fopen(arquivo, "r");
     printf("Extrato da sua conta: \n");
-    while(fread(linha, sizeof(char), sizeof(linha), arq) > 0){
+    while(fgets(linha, 100, arq) != NULL){
         printf("%s", linha);
     }
     fclose(arq);
@@ -108,17 +107,15 @@ void depReais(int user){
     printf("Digite o valor a ser depositado: ");
     scanf("%f", &valor);
     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
-    snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
-    escVar(arquivo, "reais", (lerVarFloat(arquivo, "reais")) + valor);
+    snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.txt", lerNomeDoCpf(user));
+    escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais")) + valor);
 
     time_t t;
     time(&t);
-    FILE *arq = fopen(arquivo2, "ab");
-    size_t tamStr = strlen(linha) + 1;
-    snprintf(linha, sizeof(linha), "Depositou %f reais na data %s", valor, ctime(&t));
-    fwrite(linha, sizeof(char), tamStr, arquivo);
+    FILE *arq = fopen(arquivo2, "a");
+    fprintf(arq, "Depositados %.3f reais na data %s", valor, ctime(&t));
 
-    printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVarFloat(arquivo, "reais"));
+    printf("Deposito realizado com sucesso!! Saldo atual: %.3f\n", lerVarFloat(arquivo, "reais"));
     // menu(user);
 }
 
