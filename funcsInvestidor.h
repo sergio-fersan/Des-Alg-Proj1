@@ -3,5 +3,7 @@
 
 int login();
 void consSaldo(int);
+void depReais(int);
+void consExt(int);
 
 #endif

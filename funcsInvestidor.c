@@ -103,12 +103,22 @@ void consExt(int user){
 void depReais(int user){
     float valor;
     char arquivo[50];
+    char arquivo2[50];
+    char linha[100];
     printf("Digite o valor a ser depositado: ");
     scanf("%f", &valor);
     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+    snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
     escVar(arquivo, "reais", (lerVarFloat(arquivo, "reais")) + valor);
+
+    time_t t;
+    time(&t);
+    FILE *arq = fopen(arquivo2, "ab");
+    size_t tamStr = strlen(linha) + 1;
+    snprintf(linha, sizeof(linha), "Depositou %f reais na data %s", valor, ctime(&t));
+    fwrite(linha, sizeof(char), tamStr, arquivo);
+
     printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVarFloat(arquivo, "reais"));
-    // codigo de escrever extrato
     // menu(user);
 }
 
