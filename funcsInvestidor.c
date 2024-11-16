@@ -70,46 +70,47 @@ void consSaldo(int user){ // FEITO
         }
     }
     fclose(arq);
+    // menu(user);
 }
 
-// void consExt(int user){
-//     char arquivo[25];
-//     while(1){
-//         char senhaDigitada[10];
-//         printf("Informe sua senha: ");
-//         scanf("%s", senhaDigitada);
-//         char senhaArq[10];
-//         snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
-//         int senhaInt = lerVarInt(arquivo, "senha");
-//         snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
-//         if(strcmp(senhaDigitada, senhaArq) != 0){
-//             printf("Senha incorreta!! Digite novamente\n");
-//         } else{
-//             break;
-//         }
-//     }
-//     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
-//     char linha[100];
-//     FILE *arq = fopen(arquivo, "r");
-//     printf("Extrato da sua conta: \n");
-//     while(fgets(linha, 100, arq) != NULL){
-//         printf("%s", linha);
-//     }
-//     fclose(arq);
-//     menu(user);
-// }
+void consExt(int user){
+    char arquivo[50];
+    while(1){
+        int senhaDigitada;
+        printf("Informe sua senha: ");
+        scanf("%d", senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+        int senhaInt = (int)lerVarFloat(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(senhaDigitada != senhaInt){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+    char linha[100];
+    FILE *arq = fopen(arquivo, "rb");
+    printf("Extrato da sua conta: \n");
+    while(fread(linha, sizeof(char), sizeof(linha), arq) > 0){
+        printf("%s", linha);
+    }
+    fclose(arq);
+    // menu(user);
+}
 
-// void depReais(int user){
-//     float valor;
-//     char arquivo[25];
-//     printf("Digite o valor a ser depositado: ");
-//     scanf("%f", &valor);
-//     snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
-//     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) + valor);
-//     printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
-//     escExt(valor, "r", 1, user);
-//     menu(user);
-// }
+void depReais(int user){
+    float valor;
+    char arquivo[50];
+    printf("Digite o valor a ser depositado: ");
+    scanf("%f", &valor);
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+    escVar(arquivo, "reais", (lerVarFloat(arquivo, "reais")) + valor);
+    printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVarFloat(arquivo, "reais"));
+    // codigo de escrever extrato
+    // menu(user);
+}
 
 // void sacarReais(int user){
 //     char arquivo[25];
