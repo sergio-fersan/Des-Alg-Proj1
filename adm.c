@@ -11,8 +11,6 @@
 
 int main(){
     // loginAdm();
-    criarUsuario();
-    excluirUsuario();
 
     return 0;
 }

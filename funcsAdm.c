@@ -50,9 +50,6 @@ void criarUsuario(){ // FEITO
     escVarFloat(tmp, "cpf", cpf);
     escVarFloat(tmp, "senha", senha);
     escVarFloat(tmp, "reais", 0);
-    snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.bin", nome);
-    FILE *arq1 = fopen(tmp, "wb");
-    fclose(arq1);
     FILE *arq = fopen("moedas.bin", "rb");
     Moeda md;
     while(fread(&md, sizeof(Moeda), 1, arq) == 1){
@@ -61,11 +58,14 @@ void criarUsuario(){ // FEITO
         strcat(codigo, "Saldo");
         escVarFloat(tmp, codigo, 0);
     }
+    snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.bin", nome);
+    FILE *arq1 = fopen(tmp, "wb");
+    fclose(arq1);
     escVarFloat("usuarios.bin", nome, cpf);
     printf("Usuario %s criado com sucesso!!!!\n", nome);
 }
 
-void excluirUsuario(){
+void excluirUsuario(){ // FEITO
     int cpf;
     char nome[15];
     int esc;
