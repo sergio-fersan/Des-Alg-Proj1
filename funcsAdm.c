@@ -109,7 +109,7 @@ void excluirUsuario(){ // FEITO
     }
 }
 
-void criarMoeda(){
+void criarMoeda(){ // FEITO
     Moeda md;
     FILE *arq = fopen("moedas.bin", "ab");
     printf("Digite o nome da criptomoeda: ");
@@ -143,4 +143,49 @@ void criarMoeda(){
     }
 
     printf("Moeda criada com sucesso!!!!\n");
+}
+
+void excluirMoeda(){
+    int achou = 0;
+    char tmp[30];
+    char tmp2[15];
+    char codigo[15];
+    Moeda md;
+    VariavelFloat var;
+    exibirMoedas();
+    while(1){
+        printf("Digite o nome da moeda a ser excluida: ");
+        fgets(tmp, 30, stdin);
+        tmp[strcspn(tmp, "\n")] = '\0';
+        FILE *arq = fopen("moedas.bin", "rb");
+        FILE *arqTmp = fopen("tmp.bin", "wb");
+        
+        while(fread(&md, sizeof(Moeda), 1, arq) == 1){
+            if(strcmp(md.nome, tmp) == 0){
+                achou = 1;
+            } else{
+                fwrite(&md, sizeof(Moeda), 1, arqTmp);
+            }
+        }
+        fclose(arq);
+        fclose(arqTmp);
+        
+        if(achou != 1){
+            printf("Moeda nao encontrada!! Tente novamente\n");
+            remove("tmp.bin");
+        } else{
+            remove("moedas.bin");
+            rename("tmp.bin", "moedas.bin");
+            while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+                snprintf(tmp, sizeof(tmp), "usuarios/%s/dados.bin", var.nome);
+                snprintf(codigo, sizeof(codigo), "%s", md.codigo);
+                codigo[strcspn(codigo, "\n")] = '\0';
+                strcat(codigo, "Saldo");
+                excluirVar(tmp, codigo);
+    }
+
+            printf("Moeda excluida com sucesso!!\n");
+            break;
+        }
+    }
 }
