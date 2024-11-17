@@ -7,10 +7,6 @@
 #include "funcsInvestidor.h"
 #include "variaveis.h"
 
-
-
-
-
 int main(){
     srand((unsigned int)time(NULL));
     int user = login();
