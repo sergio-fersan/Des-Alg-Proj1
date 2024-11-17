@@ -6,7 +6,7 @@ float lerVarFloat(const char *, const char *);
 void escVarStr(const char *, const char *, const char *);
 char * lerVarStr(const char *, const char *);
 char * lerNomeDoCpf(int);
-
+void escExt(const char *, const char *);
 
 
 #endif

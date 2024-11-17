@@ -118,10 +118,11 @@ void depReais(int user){ // FEITO
     snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
     escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais")) + valor);
 
-    // time_t t;
-    // time(&t);
+    time_t t;
+    time(&t);
     // FILE *arq = fopen(arquivo2, "ab");
-    // snprintf(linha, sizeof(linha), "Depositou %f reais na data %s", valor, ctime(&t));
+    snprintf(linha, sizeof(linha), "Depositou %f reais na data %s", valor, ctime(&t));
+    escExt(arquivo2, linha);
     // size_t tamStr = strlen(linha) + 1;
     // fwrite(linha, sizeof(char), strlen(linha), arq);
 
@@ -354,6 +355,39 @@ void atualizar(int user){ // FEITO
     fclose(arq);
     printf("Cotas de todas as moedas alteradas!!!!\n");
 //     menu(user);
+}
+
+void consExt(int user){
+    char arquivo[50];
+    char arquivo2[50];
+    while(1){
+        int senhaDigitada;
+        printf("Informe sua senha: ");
+        scanf("%d", &senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+        int senhaInt = (int)lerVarFloat(arquivo, "senha");
+        if(senhaDigitada != senhaInt){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+    snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+    FILE *arq = fopen(arquivo2, "rb");
+    
+    size_t tamanho;
+    char *str;
+    printf("Extrato da sua conta: \n");
+    while(fread(&tamanho, sizeof(size_t), 1, arq) == 1){
+        str = (char *)malloc(tamanho);
+        
+        fread(str, sizeof(char), tamanho, arq);
+        printf("%s", str);
+        free(str);
+    }
+    
+    fclose(arq);
 }
 
 // void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar, 3 pra comprar, 4 pra vender

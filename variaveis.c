@@ -121,3 +121,13 @@ char* lerNomeDoCpf(int cpf){
     fclose(arq);
     return strdup(""); // quando nn tem ngm com esse cpf
 }
+
+void escExt(const char *arquivo, const char *str){
+    FILE *arq = fopen(arquivo, "ab");
+    
+    size_t tamanho = strlen(str) + 1;
+    fwrite(&tamanho, sizeof(size_t), 1, arq);
+    fwrite(str, sizeof(char), tamanho, arq);
+    
+    fclose(arq);
+}

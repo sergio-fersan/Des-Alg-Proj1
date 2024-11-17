@@ -7,6 +7,10 @@
 #include "funcsInvestidor.h"
 #include "variaveis.h"
 
+
+
+
+
 int main(){
     srand((unsigned int)time(NULL));
     // int user = login();
@@ -22,12 +26,7 @@ int main(){
     // }
 
     // int user = login();
-    exibirMoedas();
-    atualizar(4);
-    exibirMoedas();
-    // atualizar(4);
-    // exibirMoedas();
-    
+
 
     // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));
     
