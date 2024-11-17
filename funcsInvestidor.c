@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "funcsInvestidor.h"
 #include "moedas.h"
 #include "variaveis.h"
@@ -420,6 +421,7 @@ void menu(int user){
             atualizar(user);
         case 8:
             printf("Saindo do programa, tchau!!!!");
+            sleep(2);
             exit(0);
     }
 }
