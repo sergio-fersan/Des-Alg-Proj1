@@ -14,6 +14,11 @@ typedef struct {
     float txVenda;
 } Moeda;
 
+typedef struct {
+    char nome[15];
+    float valor;
+} VariavelFloat;
+
 void loginAdm(){ // FEITO
     int cpfDigitado;
     int senhaDigitada;
@@ -102,4 +107,40 @@ void excluirUsuario(){ // FEITO
             break;
         }
     }
+}
+
+void criarMoeda(){
+    Moeda md;
+    FILE *arq = fopen("moedas.bin", "ab");
+    printf("Digite o nome da criptomoeda: ");
+    fgets(md.nome, 30, stdin);
+    md.nome[strcspn(md.nome, "\n")] = '\0';
+    printf("Digite o codigo de identificacao da criptomoeda: ");
+    fgets(md.codigo, 5, stdin);
+    md.codigo[strcspn(md.codigo, "\n")] = '\0';
+    printf("Digite a cota da criptomoeda: ");
+    scanf("%f", &md.cota);
+    clearBuffer();
+    printf("Digite a taxa de compra da criptomoeda: ");
+    scanf("%f", &md.txCompra);
+    clearBuffer();
+    printf("Digite a taxa de venda da criptomoeda: ");
+    scanf("%f", &md.txVenda);
+    clearBuffer();
+    fwrite(&md, sizeof(md), 1, arq);
+    fclose(arq);
+
+    FILE *arq2 = fopen("usuarios.bin", "rb");
+    VariavelFloat var;
+    char tmp[50];
+    char codigo[15];
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        snprintf(tmp, sizeof(tmp), "usuarios/%s/dados.bin", var.nome);
+        snprintf(codigo, sizeof(codigo), "%s", md.codigo);
+        codigo[strcspn(codigo, "\n")] = '\0';
+        strcat(codigo, "Saldo");
+        escVarFloat(tmp, codigo, 0);
+    }
+
+    printf("Moeda criada com sucesso!!!!\n");
 }

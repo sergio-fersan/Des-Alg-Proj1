@@ -16,30 +16,6 @@ typedef struct {
     float txVenda;
 } Moeda;
 
-void criarMoeda(){
-    Moeda md;
-    FILE *arq = fopen("moedas.bin", "ab");
-    printf("Digite o nome da criptomoeda: ");
-    fgets(md.nome, 30, stdin);
-    md.nome[strcspn(md.nome, "\n")] = '\0';
-    printf("Digite o codigo de identificacao da criptomoeda: ");
-    fgets(md.codigo, 5, stdin);
-    md.codigo[strcspn(md.codigo, "\n")] = '\0';
-    printf("Digite a cota da criptomoeda: ");
-    scanf("%f", &md.cota);
-    clearBuffer();
-    printf("Digite a taxa de compra da criptomoeda: ");
-    scanf("%f", &md.txCompra);
-    clearBuffer();
-    printf("Digite a taxa de venda da criptomoeda: ");
-    scanf("%f", &md.txVenda);
-    clearBuffer();
-    fwrite(&md, sizeof(md), 1, arq);
-    fclose(arq);
-
-    printf("Moeda criada com sucesso!!!!\n");
-}
-
 void exibirMoedas(){
     Moeda md;
     FILE *arq = fopen("moedas.bin", "rb");
