@@ -26,6 +26,8 @@ int main(){
     // }
 
     // int user = login();
+    
+    consExt(4);
 
 
     // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));

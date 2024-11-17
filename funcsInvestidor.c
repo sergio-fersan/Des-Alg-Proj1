@@ -81,32 +81,6 @@ void consSaldo(int user){ // FEITO
     // menu(user);
 }
 
-// void consExt(int user){
-//     char arquivo[50];
-//     // while(1){
-//     //     int senhaDigitada;
-//     //     printf("Informe sua senha: ");
-//     //     scanf("%d", &senhaDigitada);
-//     //     char senhaArq[10];
-//     //     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
-//     //     int senhaInt = (int)lerVarFloat(arquivo, "senha");
-//     //     if(senhaDigitada != senhaInt){
-//     //         printf("Senha incorreta!! Digite novamente\n");
-//     //     } else{
-//     //         break;
-//     //     }
-//     // }
-//     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
-//     char linha[100];
-//     FILE *arq = fopen(arquivo, "rb");
-//     printf("Extrato da sua conta: \n");
-//     while(fread(linha, sizeof(char), sizeof(linha), arq) > 0){
-//         printf("%s\n", linha);
-//     }
-//     fclose(arq);
-//     // menu(user);
-// }
-
 void depReais(int user){ // FEITO
     float valor;
     char arquivo[50];
@@ -120,11 +94,8 @@ void depReais(int user){ // FEITO
 
     time_t t;
     time(&t);
-    // FILE *arq = fopen(arquivo2, "ab");
-    snprintf(linha, sizeof(linha), "Depositou %f reais na data %s", valor, ctime(&t));
+    snprintf(linha, sizeof(linha), "Depositou %.3f reais na data %s", valor, ctime(&t));
     escExt(arquivo2, linha);
-    // size_t tamStr = strlen(linha) + 1;
-    // fwrite(linha, sizeof(char), strlen(linha), arq);
 
     printf("Deposito realizado com sucesso!! Saldo atual: %.3f\n", lerVarFloat(arquivo, "reais"));
     // menu(user);
@@ -132,6 +103,7 @@ void depReais(int user){ // FEITO
 
 void sacarReais(int user){ // FEITO
     char arquivo[50];
+    char arquivo2[50];
     while(1){
         int senhaDigitada;
         printf("Informe sua senha: ");
@@ -157,14 +129,20 @@ void sacarReais(int user){ // FEITO
             break;
         }
     }
+    char linha[100];
+    time_t t;
+    time(&t);
+    snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+    snprintf(linha, sizeof(linha), "Sacou %.3f reais na data %s", valor, ctime(&t));
+    escExt(arquivo2, linha);
     escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais")) - valor);
     printf("Saque realizado com sucesso!! Saldo atual: %.3f\n", lerVarFloat(arquivo, "reais"));
-    // escExt(valor, "r", 2, user);
     // menu(user);
 }
 
 void compCrip(int user){ // FEITO
     char arquivo[50];
+    char arquivo2[50];
     while(1){
         int senhaDigitada;
         printf("Informe sua senha: ");
@@ -232,7 +210,12 @@ void compCrip(int user){ // FEITO
             strcat(codigo, "Saldo");
             escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais") - (valor * txCompra))); // altera o valor do real
             escVarFloat(arquivo, codigo, (lerVarFloat(arquivo, codigo) + (valor/cota))); // altera o valor da moeda
-            // escrever extrato
+            char linha[100];
+            time_t t;
+            time(&t);
+            snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+            snprintf(linha, sizeof(linha), "Comprou %.3f em %s na data %s", valor/cota, esc, ctime(&t));
+            escExt(arquivo2, linha);
             printf("Compra realizada com sucesso!!!\n");
             break;
         }
@@ -242,6 +225,7 @@ void compCrip(int user){ // FEITO
 
 void venCrip(int user){ // FEITO
     char arquivo[50];
+    char arquivo2[50];
     while(1){
         int senhaDigitada;
         printf("Informe sua senha: ");
@@ -323,7 +307,12 @@ void venCrip(int user){ // FEITO
             tmp2 = valor * lerVarFloat(arquivo, codigo);
             escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais") + (tmp2 - (tmp2 * txVenda)))); // altera o valor do real
             escVarFloat(arquivo, codigo, (lerVarFloat(arquivo, codigo) - valor)); // altera o valor da moeda
-            // escrever extrato
+            char linha[100];
+            time_t t;
+            time(&t);
+            snprintf(arquivo2, sizeof(arquivo2), "usuarios/%s/ext.bin", lerNomeDoCpf(user));
+            snprintf(linha, sizeof(linha), "Vendeu %.3f em %s na data %s", valor, esc, ctime(&t));
+            escExt(arquivo2, linha);
             printf("Venda realizada com sucesso!!!\n");
             break;
         }
@@ -388,65 +377,8 @@ void consExt(int user){
     }
     
     fclose(arq);
+    // menu(user);
 }
-
-// void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar, 3 pra comprar, 4 pra vender
-//     char arquivo[25];
-//     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
-
-//     FILE *arq = fopen(arquivo, "a");
-
-//     if(arq == NULL){
-//         printf("erro\n");
-//     }
-
-//     time_t t;
-//     time(&t); // le o horario atual pra imprimir o extrato
-    
-//     switch(operacao){
-//         case 1:
-//             if(strcmp(moeda, "r") == 0){
-//                 fprintf(arq, "Depositados %.3f em Reais na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "bc") == 0){
-//                 fprintf(arq, "Depositados %.3f em BitCoin na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "eth") == 0){
-//                 fprintf(arq, "Depositados %.3f em Ethereum na data %s", valor, ctime(&t));
-//             } else{
-//                 fprintf(arq, "Depositados %.3f em Ripple na data %s", valor, ctime(&t));
-//             }
-//             break;
-//         case 2:
-//             if(strcmp(moeda, "r") == 0){
-//                 fprintf(arq, "Sacados %.3f em Reais na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "bc") == 0){
-//                 fprintf(arq, "Sacados %.3f em BitCoin na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "eth") == 0){
-//                 fprintf(arq, "Sacados %.3f em Ethereum na data %s", valor, ctime(&t));
-//             } else{
-//                 fprintf(arq, "Sacados %.3f em Ripple na data %s", valor, ctime(&t));
-//             }
-//             break;
-//         case 3:
-//             if(strcmp(moeda, "bc") == 0){
-//                 fprintf(arq, "Comprados %.3f em BitCoin na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "eth") == 0){
-//                 fprintf(arq, "Comprados %.3f em Ethereum na data %s", valor, ctime(&t));
-//             } else{
-//                 fprintf(arq, "Comprados %.3f em Ripple na data %s", valor, ctime(&t));
-//             }
-//             break;
-//         case 4:
-//             if(strcmp(moeda, "bc") == 0){
-//                 fprintf(arq, "Vendidos %.3f em BitCoin na data %s", valor, ctime(&t));
-//             } else if(strcmp(moeda, "eth") == 0){
-//                 fprintf(arq, "Vendidos %.3f em Ethereum na data %s", valor, ctime(&t));
-//             } else{
-//                 fprintf(arq, "Vendidos %.3f em Ripple na data %s", valor, ctime(&t));
-//             }
-//             break;
-//     }
-//     fclose(arq);
-// }
 
 
 
