@@ -178,7 +178,6 @@ void compCrip(int user){
     //     }
     // }
 
-    int esc;
     float valor;
     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
     printf("Saldo disponivel: %.3f\n", lerVarFloat(arquivo, "reais"));
@@ -198,6 +197,21 @@ void compCrip(int user){
     printf("Criptomoedas disponiveis:\n");
     for(int i = 0; i < cont; i++){
         printf("%s\n", moedas[i].nome);
+    }
+
+    char esc[15];
+    int achou = 0;
+    printf("Digite o nome da criptomoeda que deseja comprar: ");
+    scanf("%s", esc);
+    for(int i = 0; i < cont; i++){
+        if(strcmp(moedas[i].nome, esc) == 0){
+            printf("Codigo da moeda: %s\n", moedas[i].codigo);
+            achou = 1;
+            break;
+        }
+    }
+    if(achou == 0){
+        printf("moeda nao existe\n");
     }
     // printf("1. Bitcoin\n"
     // "2. Ethereum\n"
