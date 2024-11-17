@@ -9,6 +9,7 @@ void compCrip(int);
 void venCrip(int);
 void atualizar(int);
 void consExt(int);
+void menu(int);
 
 
 #endif

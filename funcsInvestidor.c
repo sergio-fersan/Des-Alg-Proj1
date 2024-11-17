@@ -78,7 +78,7 @@ void consSaldo(int user){ // FEITO
         }
     }
     fclose(arq);
-    // menu(user);
+    menu(user);
 }
 
 void depReais(int user){ // FEITO
@@ -98,7 +98,7 @@ void depReais(int user){ // FEITO
     escExt(arquivo2, linha);
 
     printf("Deposito realizado com sucesso!! Saldo atual: %.3f\n", lerVarFloat(arquivo, "reais"));
-    // menu(user);
+    menu(user);
 }
 
 void sacarReais(int user){ // FEITO
@@ -137,7 +137,7 @@ void sacarReais(int user){ // FEITO
     escExt(arquivo2, linha);
     escVarFloat(arquivo, "reais", (lerVarFloat(arquivo, "reais")) - valor);
     printf("Saque realizado com sucesso!! Saldo atual: %.3f\n", lerVarFloat(arquivo, "reais"));
-    // menu(user);
+    menu(user);
 }
 
 void compCrip(int user){ // FEITO
@@ -220,7 +220,7 @@ void compCrip(int user){ // FEITO
             break;
         }
     }
-    // menu(user);
+    menu(user);
 }
 
 void venCrip(int user){ // FEITO
@@ -317,7 +317,7 @@ void venCrip(int user){ // FEITO
             break;
         }
     }
-    // menu(user);
+    menu(user);
 }
 
 void atualizar(int user){ // FEITO
@@ -343,10 +343,10 @@ void atualizar(int user){ // FEITO
 
     fclose(arq);
     printf("Cotas de todas as moedas alteradas!!!!\n");
-//     menu(user);
+    menu(user);
 }
 
-void consExt(int user){
+void consExt(int user){ // FEITO
     char arquivo[50];
     char arquivo2[50];
     while(1){
@@ -377,49 +377,49 @@ void consExt(int user){
     }
     
     fclose(arq);
-    // menu(user);
+    menu(user);
 }
 
 
 
-// void menu(int user){
-//     int esc;
+void menu(int user){
+    int esc;
     
-//     printf("----------------------------------------\n");
-//     printf("Menu:\n");
-//     printf("1. Consultar Saldo\n"
-//     "2. Consultar Extrato\n"
-//     "3. Depositar Reais\n"
-//     "4. Sacar Reais\n"
-//     "5. Comprar Criptomoedas\n"
-//     "6. Vender Criptomoedas\n"
-//     "7. Atualizar Cotacao\n"
-//     "8. Sair\n");
-//     printf("----------------------------------------\n");
-//     printf("Digite sua escolha: ");
-//     scanf("%d", &esc);
-//     switch(esc){
-//         case 1:
-//             consSaldo(user);
-//             break;
-//         case 2:
-//             consExt(user);
-//             break;
-//         case 3:
-//             depReais(user);
-//             break;
-//         case 4:
-//             sacarReais(user);
-//             break;
-//         case 5:
-//             compCrip(user);
-//             break;
-//         case 6:
-//             venCrip(user);
-//         case 7:
-//             atualizar(user);
-//         case 8:
-//             printf("Saindo do programa, tchau!!!!");
-//             exit(0);
-//     }
-// }
+    printf("----------------------------------------\n");
+    printf("Menu:\n");
+    printf("1. Consultar Saldo\n"
+    "2. Consultar Extrato\n"
+    "3. Depositar Reais\n"
+    "4. Sacar Reais\n"
+    "5. Comprar Criptomoedas\n"
+    "6. Vender Criptomoedas\n"
+    "7. Atualizar Cotacao\n"
+    "8. Sair\n");
+    printf("----------------------------------------\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &esc);
+    switch(esc){
+        case 1:
+            consSaldo(user);
+            break;
+        case 2:
+            consExt(user);
+            break;
+        case 3:
+            depReais(user);
+            break;
+        case 4:
+            sacarReais(user);
+            break;
+        case 5:
+            compCrip(user);
+            break;
+        case 6:
+            venCrip(user);
+        case 7:
+            atualizar(user);
+        case 8:
+            printf("Saindo do programa, tchau!!!!");
+            exit(0);
+    }
+}
