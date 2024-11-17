@@ -51,8 +51,8 @@ void criarUsuario(){ // FEITO
     escVarFloat(tmp, "senha", senha);
     escVarFloat(tmp, "reais", 0);
     snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.bin", nome);
-    FILE *arq = fopen(tmp, "wb");
-    fclose(arq);
+    FILE *arq1 = fopen(tmp, "wb");
+    fclose(arq1);
     FILE *arq = fopen("moedas.bin", "rb");
     Moeda md;
     while(fread(&md, sizeof(Moeda), 1, arq) == 1){
@@ -63,4 +63,43 @@ void criarUsuario(){ // FEITO
     }
     escVarFloat("usuarios.bin", nome, cpf);
     printf("Usuario %s criado com sucesso!!!!\n", nome);
+}
+
+void excluirUsuario(){
+    int cpf;
+    char nome[15];
+    int esc;
+    char tmp[50];
+    while(1){
+        printf("Digite o CPF do usuario a ser excluido: ");
+        scanf("%d", &cpf);
+        snprintf(nome, sizeof(nome), "%s", lerNomeDoCpf(cpf));
+        if(strcmp(nome, "") == 0){
+            printf("CPF nao registrado!! Tente outro\n");
+        } else{
+            printf("CPF encontrado!!\n");
+            break;
+        }
+    }
+    printf("Nome: %s, CPF: %d\n", nome, cpf);
+    while(1){
+        printf("Tem certeza que deseja excluir %s? Digite 1 para sim e 0 para nao\n", nome);
+        scanf("%d", &esc);
+        if(esc != 0 && esc != 1){
+            printf("Opcao invalida!!\n");
+        } else if(esc == 0){
+            break;
+        } else{
+            excluirVar("usuarios.bin", nome);
+            snprintf(tmp, sizeof(tmp), "usuarios/%s/dados.bin", nome);
+            remove(tmp);
+            snprintf(tmp, sizeof(tmp), "usuarios/%s/ext.bin", nome);
+            remove(tmp);
+            snprintf(tmp, sizeof(tmp), "usuarios/%s", nome);
+            rmdir(tmp);
+            
+            printf("Usuario excluido com sucesso!!\n");
+            break;
+        }
+    }
 }

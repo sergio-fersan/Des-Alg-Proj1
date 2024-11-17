@@ -3,5 +3,7 @@
 
 void loginAdm();
 void criarUsuario();
+void excluirUsuario();
+
 
 #endif

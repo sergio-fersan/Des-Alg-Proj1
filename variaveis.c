@@ -131,3 +131,24 @@ void escExt(const char *arquivo, const char *str){
     
     fclose(arq);
 }
+
+void excluirVar(const char *arquivo, const char *variavel){
+    FILE *arq = fopen(arquivo, "rb");
+    FILE *arqTmp = fopen("tmp.bin", "wb");
+    
+    VariavelFloat var;
+    int achou = 0;
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        if(strcmp(var.nome, variavel) == 0){
+            achou = 1;
+            continue;
+        }
+        fwrite(&var, sizeof(VariavelFloat), 1, arqTmp);
+    }
+    if(achou == 1){
+        fclose(arq);
+        fclose(arqTmp);
+        remove(arquivo);
+        rename("tmp.bin", arquivo);
+    }
+}
