@@ -22,10 +22,8 @@ int main(){
     // }
 
     // int user = login();
-    escVarFloat("usuarios/Agostinho/dados.bin", "reais", 0);
-    depReais(4);
-    consSaldo(4);
-    sacarReais(4);
+    
+    compCrip(4);
 
     // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));
     

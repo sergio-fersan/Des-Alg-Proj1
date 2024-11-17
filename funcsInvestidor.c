@@ -11,6 +11,14 @@ typedef struct {
     float valor;
 } VariavelFloat;
 
+typedef struct {
+    char nome[15];
+    char codigo[5];
+    float cota;
+    float txCompra;
+    float txVenda;
+} Moeda;
+
 int login(){ // FEITO
     char usuario[15];
     int cpfDigitado;
@@ -99,7 +107,7 @@ void consSaldo(int user){ // FEITO
 //     // menu(user);
 // }
 
-void depReais(int user){
+void depReais(int user){ // FEITO
     float valor;
     char arquivo[50];
     char arquivo2[50];
@@ -121,7 +129,7 @@ void depReais(int user){
     // menu(user);
 }
 
-void sacarReais(int user){
+void sacarReais(int user){ // FEITO
     char arquivo[50];
     while(1){
         int senhaDigitada;
@@ -154,89 +162,100 @@ void sacarReais(int user){
     // menu(user);
 }
 
-// void compCrip(int user){
-//     float txBc = 1.02;
-//     float txEth = 1.01;
-//     float txRp = 1.01;
+void compCrip(int user){
+    char arquivo[50];
+    // while(1){
+    //     int senhaDigitada;
+    //     printf("Informe sua senha: ");
+    //     scanf("%d", &senhaDigitada);
+    //     char senhaArq[10];
+    //     snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+    //     int senhaInt = (int)lerVarFloat(arquivo, "senha");
+    //     if(senhaDigitada != senhaInt){
+    //         printf("Senha incorreta!! Digite novamente\n");
+    //     } else{
+    //         break;
+    //     }
+    // }
 
-//     char arquivo[25];
-//     while(1){
-//         char senhaDigitada[10];
-//         printf("Informe sua senha: ");
-//         scanf("%s", senhaDigitada);
-//         char senhaArq[10];
-//         snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
-//         int senhaInt = lerVarInt(arquivo, "senha");
-//         snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
-//         if(strcmp(senhaDigitada, senhaArq) != 0){
-//             printf("Senha incorreta!! Digite novamente\n");
-//         } else{
-//             break;
-//         }
-//     }
+    int esc;
+    float valor;
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", lerNomeDoCpf(user));
+    printf("Saldo disponivel: %.3f\n", lerVarFloat(arquivo, "reais"));
 
-//     int esc;
-//     float valor;
-//     snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
-//     printf("Saldo disponivel: %.3f\n", lerVar(arquivo, "rSaldo"));
-//     printf("Criptomoedas disponiveis:\n");
-//     printf("1. Bitcoin\n"
-//     "2. Ethereum\n"
-//     "3. Ripple\n");
-//     printf("Digite sua escolha: ");
-//     scanf("%d", &esc);
-//     switch(esc){
-//         case 1:
-//             printf("Comprar Bitcoin\n");
-//             while(1){
-//                 printf("Digite o valor em reais: ");
-//                 scanf("%f", &valor);
-//                 if(valor * txBc > lerVar(arquivo, "rSaldo")){
-//                     printf("Saldo insuficiente!! Digite outro\n");
-//                 } else{
-//                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txBc)));
-//                     escVar(arquivo, "bcSaldo", (valor/(lerVar(arquivo, "bcCota"))));
-//                     escExt(valor/(lerVar(arquivo, "bcCota")), "bc", 3, user);
-//                     printf("Compra realizada com sucesso!!\n");
-//                     break;
-//                 }
-//             }
-//             break;
-//         case 2:
-//             printf("Comprar Ethereum\n");
-//             while(1){
-//                 printf("Digite o valor em reais: ");
-//                 scanf("%f", &valor);
-//                 if(valor * txEth > lerVar(arquivo, "rSaldo")){
-//                     printf("Saldo insuficiente!! Digite outro\n");
-//                 } else{
-//                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txEth)));
-//                     escVar(arquivo, "ethSaldo", (valor/(lerVar(arquivo, "ethCota"))));
-//                     escExt(valor/(lerVar(arquivo, "ethCota")), "eth", 3, user);
-//                     printf("Compra realizada com sucesso!!\n");
-//                     break;
-//                 }
-//             }
-//             break;
-//         case 3:
-//             printf("Comprar Ripple\n");
-//             while(1){
-//                 printf("Digite o valor em reais: ");
-//                 scanf("%f", &valor);
-//                 if(valor * txRp > lerVar(arquivo, "rSaldo")){
-//                     printf("Saldo insuficiente!! Digite outro\n");
-//                 } else{
-//                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txRp)));
-//                     escVar(arquivo, "rpSaldo", (valor/(lerVar(arquivo, "rpCota"))));
-//                     escExt(valor/(lerVar(arquivo, "rpCota")), "rp", 3, user);
-//                     printf("Compra realizada com sucesso!!\n");
-//                     break;
-//                 }
-//             }
-//             break;
-//     }
-//     menu(user);
-// }
+    FILE *arqMoedas = fopen("moedas.bin", "rb");
+    Moeda moedas[20];
+    int cont = 0;
+
+    while(fread(&moedas[cont], sizeof(Moeda), 1, arqMoedas) == 1){
+        cont++;
+        if(cont >= 20){ // limitar pra só 20
+            break;
+        }
+    }
+    fclose(arqMoedas);
+
+    printf("Criptomoedas disponiveis:\n");
+    for(int i = 0; i < cont; i++){
+        printf("%s\n", moedas[i].nome);
+    }
+    // printf("1. Bitcoin\n"
+    // "2. Ethereum\n"
+    // "3. Ripple\n");
+    // printf("Digite sua escolha: ");
+    // scanf("%d", &esc);
+    // switch(esc){
+    //     case 1:
+    //         printf("Comprar Bitcoin\n");
+    //         while(1){
+    //             printf("Digite o valor em reais: ");
+    //             scanf("%f", &valor);
+    //             if(valor * txBc > lerVar(arquivo, "rSaldo")){
+    //                 printf("Saldo insuficiente!! Digite outro\n");
+    //             } else{
+    //                 escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txBc)));
+    //                 escVar(arquivo, "bcSaldo", (valor/(lerVar(arquivo, "bcCota"))));
+    //                 escExt(valor/(lerVar(arquivo, "bcCota")), "bc", 3, user);
+    //                 printf("Compra realizada com sucesso!!\n");
+    //                 break;
+    //             }
+    //         }
+    //         break;
+    //     case 2:
+    //         printf("Comprar Ethereum\n");
+    //         while(1){
+    //             printf("Digite o valor em reais: ");
+    //             scanf("%f", &valor);
+    //             if(valor * txEth > lerVar(arquivo, "rSaldo")){
+    //                 printf("Saldo insuficiente!! Digite outro\n");
+    //             } else{
+    //                 escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txEth)));
+    //                 escVar(arquivo, "ethSaldo", (valor/(lerVar(arquivo, "ethCota"))));
+    //                 escExt(valor/(lerVar(arquivo, "ethCota")), "eth", 3, user);
+    //                 printf("Compra realizada com sucesso!!\n");
+    //                 break;
+    //             }
+    //         }
+    //         break;
+    //     case 3:
+    //         printf("Comprar Ripple\n");
+    //         while(1){
+    //             printf("Digite o valor em reais: ");
+    //             scanf("%f", &valor);
+    //             if(valor * txRp > lerVar(arquivo, "rSaldo")){
+    //                 printf("Saldo insuficiente!! Digite outro\n");
+    //             } else{
+    //                 escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txRp)));
+    //                 escVar(arquivo, "rpSaldo", (valor/(lerVar(arquivo, "rpCota"))));
+    //                 escExt(valor/(lerVar(arquivo, "rpCota")), "rp", 3, user);
+    //                 printf("Compra realizada com sucesso!!\n");
+    //                 break;
+    //             }
+    //         }
+    //         break;
+    // }
+    // menu(user);
+}
 
 // void venCrip(int user){
 //     float txBc = 0.03;

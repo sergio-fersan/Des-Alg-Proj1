@@ -6,5 +6,6 @@ void consSaldo(int);
 void depReais(int);
 // void consExt(int);
 void sacarReais(int);
+void compCrip(int);
 
 #endif
