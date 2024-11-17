@@ -7,5 +7,7 @@ void depReais(int);
 // void consExt(int);
 void sacarReais(int);
 void compCrip(int);
+void venCrip(int);
+
 
 #endif
