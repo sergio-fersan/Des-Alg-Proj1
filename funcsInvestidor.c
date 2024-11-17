@@ -330,20 +330,31 @@ void venCrip(int user){ // FEITO
     // menu(user);
 }
 
-// void atualizar(int user){
-//     float valor = (float)rand() / (float)RAND_MAX;
-    
-//     valor = (valor * 0.1) + 0.95;
-//     char arquivo[25];
-//     for(int i = 1; i <= 10; i++){
-//         snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", i);
-//         escVar(arquivo, "bcCota", (lerVar(arquivo, "bcCota")) * valor);
-//         escVar(arquivo, "ethCota", (lerVar(arquivo, "ethCota")) * valor);
-//         escVar(arquivo, "rpCota", (lerVar(arquivo, "rpCota")) * valor);
-//     }
-//     printf("Cotas atualizadas com sucesso!!");
+void atualizar(int user){ // FEITO
+    FILE *arq = fopen("moedas.bin", "r+b");
+
+    fseek(arq, 0, SEEK_END);
+    long tamArquivo = ftell(arq);
+    fseek(arq, 0, SEEK_SET);
+
+    int numMoedas = tamArquivo / sizeof(Moeda);
+    Moeda *moedas = (Moeda *)malloc(numMoedas * sizeof(Moeda));
+
+    fread(moedas, sizeof(Moeda), numMoedas, arq);
+    srand(time(NULL));
+    for(int i = 0; i < numMoedas; i++){
+        float fator = ((rand() % 11) - 5) / 100.0f;
+        moedas[i].cota = moedas[i].cota * (1 + fator);
+    }
+    fseek(arq, 0, SEEK_SET);
+    fwrite(moedas, sizeof(Moeda), numMoedas, arq);
+
+    free(moedas);
+
+    fclose(arq);
+    printf("Cotas de todas as moedas alteradas!!!!\n");
 //     menu(user);
-// }
+}
 
 // void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar, 3 pra comprar, 4 pra vender
 //     char arquivo[25];

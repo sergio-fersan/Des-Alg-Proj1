@@ -51,7 +51,6 @@ void exibirMoedas(){
         printf("Cota: %f\n", md.cota);
         printf("Taxa de compra: %f\n", md.txCompra);
         printf("Taxa de venda: %f\n\n", md.txVenda);
-        
     }
     fclose(arq);
 }

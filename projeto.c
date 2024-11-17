@@ -22,7 +22,11 @@ int main(){
     // }
 
     // int user = login();
-    consSaldo(4);
+    exibirMoedas();
+    atualizar(4);
+    exibirMoedas();
+    // atualizar(4);
+    // exibirMoedas();
     
 
     // printf("%f\n", lerVarFloat("usuarios/Agostinho/dados.bin", "senha"));

@@ -8,6 +8,7 @@ void depReais(int);
 void sacarReais(int);
 void compCrip(int);
 void venCrip(int);
+void atualizar(int);
 
 
 #endif
