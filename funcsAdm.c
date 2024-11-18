@@ -203,7 +203,6 @@ void consSaldoInv(){ // FEITO
         if(strcmp(nome, "") == 0){
             printf("CPF nao registrado!! Tente outro\n");
         } else{
-            printf("CPF encontrado!!\n");
             break;
         }
     }
@@ -221,5 +220,37 @@ void consSaldoInv(){ // FEITO
             printf("%s: %.3f\n", lerNomeDoCodigo(tmp), lerVarFloat(arquivo, var.nome));
         }
     }
+    fclose(arq);
+}
+
+void consExtInv(){ // FEITO
+    int cpf;
+    char arquivo[50];
+    char nome[15];
+    while(1){
+        printf("Digite o CPF do usuario que deseja ver o extrato: ");
+        scanf("%d", &cpf);
+        snprintf(nome, sizeof(nome), "%s", lerNomeDoCpf(cpf));
+        if(strcmp(nome, "") == 0){
+            printf("CPF nao registrado!! Tente outro\n");
+        } else{
+            break;
+        }
+    }
+
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/ext.bin", lerNomeDoCpf(cpf));
+    FILE *arq = fopen(arquivo, "rb");
+    
+    size_t tamanho;
+    char *str;
+    printf("Extrato da conta de %s: \n", nome);
+    while(fread(&tamanho, sizeof(size_t), 1, arq) == 1){
+        str = (char *)malloc(tamanho);
+        
+        fread(str, sizeof(char), tamanho, arq);
+        printf("%s", str);
+        free(str);
+    }
+    
     fclose(arq);
 }

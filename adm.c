@@ -11,8 +11,10 @@
 
 int main(){
     // loginAdm();
-    consSaldoInv();
-    consSaldoInv();
+
+
+    consExtInv();
+    
     
 
     return 0;

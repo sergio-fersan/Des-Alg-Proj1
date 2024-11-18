@@ -7,5 +7,7 @@ void excluirUsuario();
 void criarMoeda();
 void excluirMoeda();
 void consSaldoInv();
+void consExtInv();
+
 
 #endif
