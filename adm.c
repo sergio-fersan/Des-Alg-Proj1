@@ -10,13 +10,8 @@
 
 
 int main(){
-    // loginAdm();
-
-    exibirMoedas();
-    atualizarAdm();
-    exibirMoedas();
-    
-    
+    loginAdm();
+    menuAdm();
 
     return 0;
 }

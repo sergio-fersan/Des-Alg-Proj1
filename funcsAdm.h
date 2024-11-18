@@ -9,5 +9,6 @@ void excluirMoeda();
 void consSaldoInv();
 void consExtInv();
 void atualizarAdm();
+void menuAdm();
 
 #endif

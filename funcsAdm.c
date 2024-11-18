@@ -3,6 +3,7 @@
 #include <string.h>
 #include <direct.h>
 #include <time.h>
+#include <unistd.h>
 #include "variaveis.h"
 #include "moedas.h"
 #include "funcsAdm.h"
@@ -279,4 +280,47 @@ void atualizarAdm(){ // FEITO
 
     fclose(arq);
     printf("Cotas de todas as moedas alteradas!!!!\n");
+}
+
+void menuAdm(){
+    int esc;
+    
+    printf("----------------------------------------\n");
+    printf("Menu:\n");
+    printf("1. Cadastrar Novo Investidor\n"
+    "2. Excluir Investidor\n"
+    "3. Cadastrar Nova Criptomoeda\n"
+    "4. Excluir Criptomoeda\n"
+    "5. Consultar Saldo de um Investidor\n"
+    "6. Consultar Extrato de um Investidor\n"
+    "7. Atualizar Cotacao\n"
+    "8. Sair\n");
+    printf("----------------------------------------\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &esc);
+    switch(esc){
+        case 1:
+            criarUsuario();
+            break;
+        case 2:
+            excluirUsuario();
+            break;
+        case 3:
+            criarMoeda();
+            break;
+        case 4:
+            excluirMoeda();
+            break;
+        case 5:
+            consSaldoInv();
+            break;
+        case 6:
+            consExtInv();
+        case 7:
+            atualizarAdm();
+        case 8:
+            printf("Saindo do programa, tchau!!!!");
+            sleep(2);
+            exit(0);
+    }
 }

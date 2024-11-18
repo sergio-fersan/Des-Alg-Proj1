@@ -381,8 +381,6 @@ void consExt(int user){ // FEITO
     menu(user);
 }
 
-
-
 void menu(int user){
     int esc;
     
