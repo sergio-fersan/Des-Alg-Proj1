@@ -6,5 +6,6 @@ void criarUsuario();
 void excluirUsuario();
 void criarMoeda();
 void excluirMoeda();
+void consSaldoInv();
 
 #endif

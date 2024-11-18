@@ -11,7 +11,9 @@
 
 int main(){
     // loginAdm();
-
+    consSaldoInv();
+    consSaldoInv();
+    
 
     return 0;
 }

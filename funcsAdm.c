@@ -145,7 +145,7 @@ void criarMoeda(){ // FEITO
     printf("Moeda criada com sucesso!!!!\n");
 }
 
-void excluirMoeda(){
+void excluirMoeda(){ // FEITO
     int achou = 0;
     char tmp[30];
     char tmp2[50];
@@ -190,4 +190,36 @@ void excluirMoeda(){
         }
     }
     fclose(arqUsuarios);
+}
+
+void consSaldoInv(){ // FEITO
+    int cpf;
+    char arquivo[50];
+    char nome[15];
+    while(1){
+        printf("Digite o CPF do usuario que deseja ver o saldo: ");
+        scanf("%d", &cpf);
+        snprintf(nome, sizeof(nome), "%s", lerNomeDoCpf(cpf));
+        if(strcmp(nome, "") == 0){
+            printf("CPF nao registrado!! Tente outro\n");
+        } else{
+            printf("CPF encontrado!!\n");
+            break;
+        }
+    }
+    
+    snprintf(arquivo, sizeof(arquivo), "usuarios/%s/dados.bin", nome);
+    FILE *arq = fopen(arquivo, "rb");
+    VariavelFloat var;
+    char tmp[20];
+    printf("Saldo da conta de %s: \n", nome);
+    printf("Reais: %.3f\n", lerVarFloat(arquivo, "reais"));
+    while(fread(&var, sizeof(VariavelFloat), 1, arq) == 1){
+        if(strstr(var.nome, "Saldo") != NULL){
+            snprintf(tmp, sizeof(tmp), "%s", var.nome);
+            removerSaldo(tmp);
+            printf("%s: %.3f\n", lerNomeDoCodigo(tmp), lerVarFloat(arquivo, var.nome));
+        }
+    }
+    fclose(arq);
 }
