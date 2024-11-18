@@ -12,8 +12,9 @@
 int main(){
     // loginAdm();
 
-
-    consExtInv();
+    exibirMoedas();
+    atualizarAdm();
+    exibirMoedas();
     
     
 

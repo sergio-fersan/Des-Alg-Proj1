@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <direct.h>
+#include <time.h>
 #include "variaveis.h"
 #include "moedas.h"
 #include "funcsAdm.h"
@@ -253,4 +254,29 @@ void consExtInv(){ // FEITO
     }
     
     fclose(arq);
+}
+
+void atualizarAdm(){ // FEITO
+    FILE *arq = fopen("moedas.bin", "r+b");
+
+    fseek(arq, 0, SEEK_END);
+    long tamArquivo = ftell(arq);
+    fseek(arq, 0, SEEK_SET);
+
+    int numMoedas = tamArquivo / sizeof(Moeda);
+    Moeda *moedas = (Moeda *)malloc(numMoedas * sizeof(Moeda));
+
+    fread(moedas, sizeof(Moeda), numMoedas, arq);
+    srand(time(NULL));
+    for(int i = 0; i < numMoedas; i++){
+        float fator = ((rand() % 11) - 5) / 100.0f;
+        moedas[i].cota = moedas[i].cota * (1 + fator);
+    }
+    fseek(arq, 0, SEEK_SET);
+    fwrite(moedas, sizeof(Moeda), numMoedas, arq);
+
+    free(moedas);
+
+    fclose(arq);
+    printf("Cotas de todas as moedas alteradas!!!!\n");
 }

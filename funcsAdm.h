@@ -8,6 +8,6 @@ void criarMoeda();
 void excluirMoeda();
 void consSaldoInv();
 void consExtInv();
-
+void atualizarAdm();
 
 #endif
