@@ -1,20 +1,21 @@
-# Des Alg Proj1
- Projeto 1 do curso de desenvolvimento de algoritmos
+# **Projeto Exchange de Criptomoedas 2**
 
-Integrantes:
-Sergio de Siqueira Santos - 22.124.082-3
-André Lima Pereira - 24.124.051-4
+## Sergio de Siqueira Santos - 22.124.082-3
 
-O projeto é executado executando "projeto.exe", na pasta "output"
+Para utilizar este projeto como investidor, execute **"investidor.exe"**
+Para utilizar como administrador, execute **"administrador.exe"**
 
-O objetivo do projeto é simular uma exchange de criptomoedas. Com o crescimento do mundo das criptomoedas, é interessante simular uma transação de Bitcoin, Ethereum e Ripple,
-mesmo que seja apenas para fins didáticos.
+O objetivo do projeto é simular uma exchange de criptomoedas. Com o crescimento do mundo das criptomoedas, é interessante simular uma transação de Bitcoin, Ethereum, Ripple, etc.
 
-O projeto pode armazenar os dados de até 10 usuários, cada umm com sua própria pasta contendo 3 arquivos: "dados.txt", que armazena o saldo das quatro moedas e suas cotas, "extrato.txt", que armazena o
-histórico de transações do usuário, e "cpfesenha.txt" que, como o nome indica, armazena o CPF e senha do usuário.
-Foram criadas funções especificamente para ler ou escrever nos arquivos, visto que o código é grande.
+O programa foi completamente reescrito, para que aceite as novas funcionalidades do administrador. Agora é possível ter quantos usuários o administrador desejar, com um novo sistema de
+armazenamento, em arquivos binários ao invés de texto. Além disso, o administrador também pode criar qualquer moeda que desejar, informando o nome, código de identificação, cotação inicial, 
+taxa de compra e venda (o código de identificação é uma string de até 5 caracteres que permite que o programa faça as alterações necessárias nos dados).
 
-O programa permite que o usuário consulte seu saldo e extrato, deposite ou saque reais e compre ou venda criptomoedas.
+Cada usuário tem seu próprio CPF, senha e nome. Para simplificar, o CPF do usuário é apenas um número - de 1 a 10 - e sua senha é o mesmo número seguido de "2345"
+Por exemplo, o usuário 4 é dono da pasta "user4", seu CPF é "4" e sua senha é "42345" (devido ao limite de 2^32 de um int, vale mais a pena colocar um número menor)
 
-Cada usuário tem seu próprio CPF e senha. Para simplificar, o CPF do usuário é apenas um número - de 1 a 10 - e sua senha é o mesmo número seguido de "2345"
-Por exemplo, o usuário 4 é dono da pasta "user4", seu CPF é "4" e sua senha é "42345"
+O CPF do administrador é 4002, e a senha é 8922.
+
+Como não é possível criar um fork do próprio repositório, o projeto foi feito em uma branch do projeto original. Todas as branches com o nome "PROJETO 3" são as pertinentes à este projeto.
+
+Obrigado pela atenção!!!
