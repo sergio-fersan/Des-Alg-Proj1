@@ -44,6 +44,7 @@ void criarUsuario(){ // FEITO
     int senha;
     char tmp[50];
     char codigo[15];
+    clearBuffer();
     printf("Digite o nome do investidor: ");
     fgets(nome, 15, stdin);
     nome[strcspn(nome, "\n")] = '\0';
@@ -70,6 +71,7 @@ void criarUsuario(){ // FEITO
     fclose(arq1);
     escVarFloat("usuarios.bin", nome, cpf);
     printf("Usuario %s criado com sucesso!!!!\n", nome);
+    menuAdm();
 }
 
 void excluirUsuario(){ // FEITO
@@ -109,11 +111,13 @@ void excluirUsuario(){ // FEITO
             break;
         }
     }
+    menuAdm();
 }
 
 void criarMoeda(){ // FEITO
     Moeda md;
     FILE *arq = fopen("moedas.bin", "ab");
+    clearBuffer();
     printf("Digite o nome da criptomoeda: ");
     fgets(md.nome, 30, stdin);
     md.nome[strcspn(md.nome, "\n")] = '\0';
@@ -145,6 +149,7 @@ void criarMoeda(){ // FEITO
     }
 
     printf("Moeda criada com sucesso!!!!\n");
+    menuAdm();
 }
 
 void excluirMoeda(){ // FEITO
@@ -156,6 +161,7 @@ void excluirMoeda(){ // FEITO
     VariavelFloat var;
     exibirMoedas();
     FILE *arqUsuarios = fopen("usuarios.bin", "rb");
+    clearBuffer();
     while(1){
         printf("Digite o nome da moeda a ser excluida: ");
         fgets(tmp, 30, stdin);
@@ -192,6 +198,7 @@ void excluirMoeda(){ // FEITO
         }
     }
     fclose(arqUsuarios);
+    menuAdm();
 }
 
 void consSaldoInv(){ // FEITO
@@ -223,6 +230,7 @@ void consSaldoInv(){ // FEITO
         }
     }
     fclose(arq);
+    menuAdm();
 }
 
 void consExtInv(){ // FEITO
@@ -255,6 +263,7 @@ void consExtInv(){ // FEITO
     }
     
     fclose(arq);
+    menuAdm();
 }
 
 void atualizarAdm(){ // FEITO
@@ -280,6 +289,7 @@ void atualizarAdm(){ // FEITO
 
     fclose(arq);
     printf("Cotas de todas as moedas alteradas!!!!\n");
+    menuAdm();
 }
 
 void menuAdm(){
