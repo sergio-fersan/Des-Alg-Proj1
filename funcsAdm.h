@@ -5,5 +5,6 @@ void loginAdm();
 void criarUsuario();
 void excluirUsuario();
 void criarMoeda();
+void excluirMoeda();
 
 #endif

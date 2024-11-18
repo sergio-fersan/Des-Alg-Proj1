@@ -13,9 +13,5 @@ int main(){
     // loginAdm();
 
 
-
-    
-    // consSaldo(4);
-
     return 0;
 }
